@@ -11,9 +11,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger docs.pact.io update workflow
+      - name: Trigger partner.pactflow.io update workflow
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.GHTOKENFORTRIGGERINGPACTDOCSUPDATE }}
           repository: pactflow/partners.pactflow.io
-          event-type: pactflow-example-consumer-js-updated
+          event-type: pactflow-example-consumer-python-updated
