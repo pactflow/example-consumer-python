@@ -6,7 +6,6 @@
 
 [![Pact Status](https://test.pactflow.io/matrix/provider/pactflow-example-provider-python/latest/prod/consumer/pactflow-example-consumer-python/latest/prod/badge.svg?label=provider)](https://test.pactflow.io/pacts/provider/pactflow-example-provider-python/consumer/pactflow-example-consumer-python/latest/prod) (prod/prod pact)
 
-
 This is an example of a Python consumer using Pact to create a consumer driven contract, and sharing it via [Pactflow](https://pactflow.io).
 
 It is using a public tenant on Pactflow, which you can access [here](https://test.pactflow.io) using the credentials `dXfltyFMgNOFZAxr8io9wJ37iUpY42M`/`O5AIZWxelWbLvqMd8PkAVycBJh2Psyg1`. The latest version of the Example Consumer/Example Provider pact is published [here](https://test.pactflow.io/pacts/provider/pactflow-example-provider-python/consumer/pactflow-example-consumer-python/latest).
