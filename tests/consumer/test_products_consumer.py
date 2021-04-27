@@ -13,7 +13,6 @@ from src.consumer import ProductConsumer
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
-print(Format().__dict__)
 
 PACT_MOCK_HOST = 'localhost'
 PACT_MOCK_PORT = 1234
@@ -45,7 +44,8 @@ def test_get_product(pact, consumer):
     expected = {
         'id': "27",
         'name': 'Margharita',
-        'type': 'Pizza'
+        'type': 'Pizza',
+        'date': Format().timestamp
     }
 
     (pact
