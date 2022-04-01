@@ -43,13 +43,6 @@ test: .env
 ## Deploy tasks
 ## =====================
 
-test: .env
-	./gradlew clean test -i
-
-## =====================
-## Deploy tasks
-## =====================
-
 deploy: deploy_app tag record_deployment
 
 no_deploy:
