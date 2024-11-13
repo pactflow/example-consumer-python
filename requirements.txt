@@ -1,4 +1,4 @@
-Flask==1.1.1
-pytest==6.2.5
+Flask==2.3.2
 requests==2.28.0
+pytest==6.2.5
 pact_python==2.2.2
