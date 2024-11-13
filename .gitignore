@@ -22,4 +22,4 @@ build/
 pacts/
 logs/
 *.log
-
+.venv
