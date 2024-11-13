@@ -1,10 +1,7 @@
-"""pact test for product service client"""
+"""pact test for product service client via ruby core"""
 
-import json
 import logging
 import os
-import requests
-from requests.auth import HTTPBasicAuth
 
 import pytest
 from pact import Consumer, Like, Provider, Term, Format
