@@ -13,19 +13,13 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-      # note currently PACT_PROVIDER isn't used in the code
-        pact_provider:
-          [
-            "pactflow-example-provider-python",
-            # "pactflow-example-bi-directional-provider-dredd",
-            # "pactflow-example-bi-directional-provider-restassured",
-            # "pactflow-example-bi-directional-provider-postman",
-            # "pactflow-example-bi-directional-provider",
-            # 'pactflow-example-bi-directional-provider-dotnet'
-          ]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
@@ -35,12 +29,9 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Test pactflow-example-consumer-python against ${{ matrix.pact_provider }}
         run: make test
-        env:
-          PACT_PROVIDER: ${{ matrix.pact_provider }}
       - name: Publish pacts
         run: GIT_BRANCH=${GIT_REF:11} make publish_pacts
-        env:
-          PACT_PROVIDER: ${{ matrix.pact_provider }}
+        if: matrix.os == 'ubuntu-latest'
 
   # Runs on branches as well, so we know the status of our PRs
   can-i-deploy:
