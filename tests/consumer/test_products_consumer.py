@@ -54,3 +54,18 @@ def test_get_product(pact, consumer):
     with pact:
         user = consumer.get_product('10')
         assert user.name == 'Margharita'
+
+def test_delete_product_with_body(pact, consumer):
+    expected = {
+        'id': "27"
+    }
+
+    (pact
+     .given('a product with ID 10 exists')
+     .upon_receiving('a request to delete a product')
+     .with_request('DELETE', '/product/10', headers={'Content-Type': 'application/json'}, body=Like(expected))
+     .will_respond_with(204))
+
+    with pact:
+        response = consumer.delete_product('10')
+        assert response == 204
