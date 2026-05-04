@@ -2,7 +2,6 @@
 # It's set as a secure environment variable in the build.yml file
 PACTICIPANT := "pactflow-example-consumer-python"
 GITHUB_WEBHOOK_UUID := "04510dc1-7f0a-4ed2-997d-114bfa86f8ad"
-PACT_CLI="docker run --rm -v ${PWD}:${PWD} -e PACT_BROKER_BASE_URL -e PACT_BROKER_TOKEN -e PACT_BROKER_USERNAME -e PACT_BROKER_PASSWORD pactfoundation/pact-cli:latest"
 
 # Only deploy from master
 ifeq ($(GIT_BRANCH),master)
@@ -30,7 +29,7 @@ fake_ci: .env
 	make ci
 
 publish_pacts: .env
-	@"${PACT_CLI}" publish ${PWD}/pacts --consumer-app-version ${GIT_COMMIT} --branch ${GIT_BRANCH}
+	pact broker publish ${PWD}/pacts --consumer-app-version ${GIT_COMMIT} --branch ${GIT_BRANCH}
 
 ## =====================
 ## Build/test tasks
@@ -50,7 +49,7 @@ no_deploy:
 
 can_i_deploy: .env
 	echo "can_i_deploy"
-	@"${PACT_CLI}" broker can-i-deploy \
+	pact broker can-i-deploy \
 	  --pacticipant ${PACTICIPANT} \
 	  --version ${GIT_COMMIT} \
 	  --to-environment production \
@@ -61,7 +60,7 @@ deploy_app:
 	@echo "Deploying to prod"
 
 record_deployment: .env
-	@"${PACT_CLI}" broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production
+	pact broker record-deployment --pacticipant ${PACTICIPANT} --version ${GIT_COMMIT} --environment production
 
 ## =====================
 ## PactFlow set up tasks
@@ -80,8 +79,7 @@ create_github_token_secret:
 # so that any PRs will get a status that shows what the status of
 # the pact is.
 create_or_update_github_webhook:
-	@"${PACT_CLI}" \
-	  broker create-or-update-webhook \
+	pact broker create-or-update-webhook \
 	  'https://api.github.com/repos/pactflow/example-consumer/statuses/$${pactbroker.consumerVersionNumber}' \
 	  --header 'Content-Type: application/json' 'Accept: application/vnd.github.v3+json' 'Authorization: token $${user.githubCommitStatusToken}' \
 	  --request POST \

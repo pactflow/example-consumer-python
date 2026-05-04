@@ -30,8 +30,8 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
-          python-version: '3.14' 
-          architecture: 'x64' 
+          python-version: '3.14'
+          architecture: 'x64'
       - run: pip install -r requirements.txt
       - name: Test pactflow-example-consumer-python against ${{ matrix.pact_provider }}
         run: make test
@@ -48,7 +48,11 @@ jobs:
     needs: test
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - run: docker pull pactfoundation/pact-cli:latest
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: '3.14'
+          architecture: 'x64'
+      - run: pip install -r requirements.txt
       - name: Can I deploy?
         run: GIT_BRANCH=${GIT_REF:11} make can_i_deploy
 
@@ -58,7 +62,11 @@ jobs:
     needs: can-i-deploy
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-      - run: docker pull pactfoundation/pact-cli:latest
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
+        with:
+          python-version: '3.14'
+          architecture: 'x64'
+      - run: pip install -r requirements.txt
       - name: Deploy
         run: GIT_BRANCH=${GIT_REF:11} make deploy
         if: github.ref == 'refs/heads/master'
